@@ -1,66 +1,95 @@
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { defineStore } from "pinia";
+import { ref, computed } from "vue";
 
-import { RegisterApi,LoginApi } from '@/api/user'
-import { getStorage, setStorage, removeStorage } from '@/utils/storage'
+import { RegisterApi, LoginApi, UserInfoApi } from "@/api/user";
+import { getStorage, setStorage, removeStorage } from "@/utils/storage";
 
 // 类型
-import type { IUserFormData } from '@/types/user'
+import type { IUserFormData, IUserInfo } from "@/types/user";
 
-export const useUserStore = defineStore('user', () => {
-    const userFormData = ref<IUserFormData>({
-        username: '',
-        password: '',
-        email: ''
-    })
+export const useUserStore = defineStore("user", () => {
+  const userFormData = ref<IUserFormData>({
+    username: "",
+    password: "",
+    email: "",
+  });
 
-    const token = ref(getStorage('token') || '')
+  const userInfo = ref<IUserInfo>({} as IUserInfo);
 
-    const resetFormData = () => {
-        userFormData.value = {
-            username: '',
-            password: '',
-            email: ''
-        }
+  const token = ref(getStorage("token") || "");
+
+  // 重置表单
+  const resetFormData = () => {
+    userFormData.value = {
+      username: "",
+      password: "",
+      email: "",
+    };
+  };
+  //   重置用户信息
+  const resetUserInfo = () => {
+    userInfo.value = {} as IUserInfo;
+  };
+
+  // 注册
+  const register = async () => {
+    try {
+      return await RegisterApi(userFormData.value);
+    } catch (error: any) {
+      return Promise.reject(formatError(error.response.data));
     }
+  };
 
-    const register = async () => {
-        try {
-          return  await RegisterApi(userFormData.value)
-        } catch (error: any) {
-          return  Promise.reject(formatError(error.response.data))
-        }
+  //   登录
+  const login = async () => {
+    try {
+      const res = await LoginApi(userFormData.value);
+      token.value = res.access;
+      setStorage("token", res.access);
+      setStorage("refreshToken", res.refresh);
+    } catch (error: any) {
+      return Promise.reject("登录失败,请检查账号密码是否正确");
     }
+  };
 
-    const login = async () => {
-        try {
-            const res = await LoginApi(userFormData.value)
-            token.value = res.access
-            setStorage('token', res.access)
-            setStorage('refreshToken', res.refresh)
-        } catch (error: any) {
-            return Promise.reject('登录失败,请检查账号密码是否正确')
-        }
-    }
+  // 退出登录
+  const logout = () => {
+    token.value = "";
+    resetUserInfo();
+    removeStorage("token");
+    removeStorage("refreshToken");
+  };
 
-    const logout = () => {
-        token.value = ''
-        removeStorage('token')
-        removeStorage('refreshToken')
+  //   获取用户信息
+  const getUserInfo = async () => {
+    try {
+      const res = await UserInfoApi();
+      userInfo.value = res;
+    } catch (error: any) {
+      return Promise.reject(formatError(error.response.data));
     }
+  };
 
-    return {
-        userFormData,
-        register,
-        resetFormData,
-        login,
-        token,
-        logout
-    }
-})
+  const firstName = computed(() => {
+    return userInfo.value.username?.charAt(0).toUpperCase() || "";
+  });
+
+  return {
+    userFormData,
+    register,
+    resetFormData,
+    login,
+    token,
+    logout,
+    getUserInfo,
+    userInfo,
+    resetUserInfo,
+    firstName,
+  };
+});
 
 function formatError(error: any) {
-    const errorArray = Object.entries(error)
-    const errorText = errorArray[0][1] as string[]
-    return errorText[0]
+  const errorArray = Object.entries(error);
+  const errorText = errorArray[0][1] as string[];
+  return errorText[0];
 }

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import ContactIcon from "@/assets/icons/contact.svg?component";
 import MessageIcon from "@/assets/icons/message.svg?component";
 import MoreRoomIcon from "@/assets/icons/more_room.svg?component";

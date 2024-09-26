@@ -101,7 +101,9 @@ const handleLogOut = () => {
         <div tabindex="0" role="button" class="btn btn-circle btn-sm">
           <div class="avatar placeholder">
             <div class="bg-neutral text-neutral-content w-8 rounded-full">
-              <span class="text-xs">登录</span>
+              <span class="text-xs font-mono">{{
+                userStore.firstName || "登录"
+              }}</span>
             </div>
           </div>
         </div>
@@ -118,7 +120,9 @@ const handleLogOut = () => {
                     <div
                       class="bg-neutral text-neutral-content w-16 rounded-full"
                     >
-                      <span class="text-xl">AI</span>
+                      <span class="text-xl font-mono">{{
+                        userStore.firstName
+                      }}</span>
                     </div>
                   </div>
                 </div>

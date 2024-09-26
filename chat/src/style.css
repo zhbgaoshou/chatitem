@@ -12,4 +12,12 @@
     border-right:  1px solid oklch(var(--b3))
 }
 
-
+.ellipsis {
+    overflow: hidden;           /* 确保文本不会超出容器的范围 */
+    white-space: nowrap;        /* 强制文本在一行显示 */
+    display: inline-block;      /* 使元素能够应用渐变蒙版 */
+    -webkit-mask-image: linear-gradient(to right, white 80%, transparent 100%);
+    mask-image: linear-gradient(to right, white 80%, transparent 100%);
+  }
+  
+  

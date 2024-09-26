@@ -3,7 +3,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import store from "@/store";
 import { useUserStore } from "@/store/modules/user";
 
-const whiteList = ["/"];
+const whiteList = ["/", "/register", "/login", "/chat"];
 
 const init_router = () => {
   return createRouter({
@@ -42,20 +42,26 @@ const init_router = () => {
 const router = init_router();
 const userStore = useUserStore(store);
 
-router.beforeEach((to, from, next) => {
-  const token = userStore.token
+router.beforeEach(async (to, from, next) => {
+  const token = userStore.token;
+  const firstName = userStore.firstName;
 
   if (token) {
-    if (to.path === '/login' || to.path === '/register') {
-      next('/')
+    if (to.path === "/login" || to.path === "/register") {
+      next("/");
     } else {
-      next()
+      if (firstName) {
+        next();
+      } else {
+        await userStore.getUserInfo();
+        next({ ...to, replace: true });
+      }
     }
   } else {
     if (whiteList.includes(to.path)) {
-      next()
+      next();
     } else {
-      to.path === '/login' ? next() : next('/login')
+      to.path === "/login" ? next() : next("/login");
     }
   }
 });

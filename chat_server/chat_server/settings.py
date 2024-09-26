@@ -18,7 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'user'
+    'user',
+    'room'
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "chat",
         "USER": "root",
-        "PASSWORD": "123456",
+        "PASSWORD": "12345678",
         "HOST": "127.0.0.1",
         "PORT": "3306",
     }
