@@ -13,6 +13,7 @@
 }
 
 .ellipsis {
+    width: 150px;
     overflow: hidden;           /* 确保文本不会超出容器的范围 */
     white-space: nowrap;        /* 强制文本在一行显示 */
     display: inline-block;      /* 使元素能够应用渐变蒙版 */

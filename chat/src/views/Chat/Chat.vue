@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import Footer from "@/components/Footer/Footer.vue";
 import Message from "./Message.vue";
+import Room from "./Room.vue";
 
 import DleftIcon from "@/assets/icons/d_left.svg?component";
-import moreRoomIcon from "@/assets/icons/more_room.svg?component";
-import renameIcon from "@/assets/icons/rename.svg?component";
-import deleteIcon from "@/assets/icons/delete.svg?component";
+
 </script>
 
 <template>
@@ -22,10 +21,8 @@ import deleteIcon from "@/assets/icons/delete.svg?component";
       </div>
 
       <!-- 会话记录 -->
-      <label
-        for="my-drawer"
-        class="drawer-button rounded-tl-lg rounded-bl-lg rounded-none px-1 btn btn-sm absolute right-0 z-[1] shadow-none"
-      >
+      <label for="my-drawer"
+        class="drawer-button rounded-tl-lg rounded-bl-lg rounded-none px-1 btn btn-sm absolute right-0 z-[1] shadow-none">
         <DleftIcon />
       </label>
 
@@ -35,96 +32,7 @@ import deleteIcon from "@/assets/icons/delete.svg?component";
         <div class="drawer-content"></div>
 
         <div class="drawer-side absolute w-[240px] h-full ms-[-240px]">
-          <ul
-            class="menu bg-base-200 h-full w-[240px] rounded-tl-box rounded-bl-box overflow-auto flex-nowrap"
-          >
-            <li class="menu-title px-[10px]">今天</li>
-            <li v-for="i in 2" class="no-bg-click">
-              <a
-                class="flex justify-between px-[10px]"
-                :class="{ active: i === 1 }"
-              >
-                <p>新会话{{ i }}</p>
-                <div class="dropdown dropdown-end">
-                  <div tabindex="1" role="button" class="btn btn-sm">
-                    <moreRoomIcon />
-                  </div>
-                  <ul
-                    tabindex="1"
-                    class="dropdown-content menu bg-base-100 rounded-box z-[1] w-max p-2 shadow"
-                  >
-                    <li>
-                      <a class="text-error"
-                        ><deleteIcon class="w-[18px]" /> 删除</a
-                      >
-                    </li>
-
-                    <li>
-                      <a class="text-base-content">
-                        <renameIcon class="w-[18px]" />重命名</a
-                      >
-                    </li>
-                  </ul>
-                </div>
-              </a>
-            </li>
-
-            <li class="menu-title px-[10px]">昨天</li>
-            <li v-for="i in 3" class="no-bg-click">
-              <a class="flex justify-between px-[10px]">
-                <p>新会话{{ i }}</p>
-                <div class="dropdown dropdown-end">
-                  <div tabindex="1" role="button" class="btn btn-sm">
-                    <moreRoomIcon />
-                  </div>
-                  <ul
-                    tabindex="1"
-                    class="dropdown-content menu bg-base-100 rounded-box z-[1] w-max p-2 shadow"
-                  >
-                    <li>
-                      <a class="text-error"
-                        ><deleteIcon class="w-[18px]" /> 删除</a
-                      >
-                    </li>
-
-                    <li>
-                      <a class="text-base-content">
-                        <renameIcon class="w-[18px]" />重命名</a
-                      >
-                    </li>
-                  </ul>
-                </div>
-              </a>
-            </li>
-
-            <li class="menu-title px-[10px]">更早</li>
-            <li v-for="i in 10" class="no-bg-click">
-              <a class="flex justify-between px-[10px]">
-                <p>新会话{{ i }}</p>
-                <div class="dropdown dropdown-end">
-                  <div tabindex="1" role="button" class="btn btn-sm">
-                    <moreRoomIcon />
-                  </div>
-                  <ul
-                    tabindex="1"
-                    class="dropdown-content menu bg-base-100 rounded-box z-[1] w-max p-2 shadow"
-                  >
-                    <li>
-                      <a class="text-error"
-                        ><deleteIcon class="w-[18px]" /> 删除</a
-                      >
-                    </li>
-
-                    <li>
-                      <a class="text-base-content">
-                        <renameIcon class="w-[18px]" />重命名</a
-                      >
-                    </li>
-                  </ul>
-                </div>
-              </a>
-            </li>
-          </ul>
+         <Room/>
         </div>
       </div>
     </div>
@@ -132,4 +40,13 @@ import deleteIcon from "@/assets/icons/delete.svg?component";
   </div>
 </template>
 
-<style></style>
+<style>
+/* 禁用单击、聚焦或悬停时的背景和字体颜色改变 */
+.no-style-click > a:focus,
+.no-style-click > a:active,
+.no-style-click > a:hover {
+  background-color: transparent !important; /* 禁止背景颜色改变 */
+  box-shadow: none !important;             /* 禁止阴影效果 */
+  color: inherit !important;               /* 保持原有字体颜色 */
+}
+</style>
