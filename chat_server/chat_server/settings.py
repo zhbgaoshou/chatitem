@@ -17,9 +17,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'rest_framework',
     'user',
-    'room'
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "chat",
         "USER": "root",
-        "PASSWORD": "123456",
+        "PASSWORD": "12345678",
         "HOST": "127.0.0.1",
         "PORT": "3306",
     }
@@ -96,6 +97,14 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ["rest_framework_simplejwt.authentication.JWTAuthentication"],
     # 权限
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+        # 过滤 OR 搜索 OR 排序
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ],
+    # 分页
+    'DEFAULT_PAGINATION_CLASS': 'chat_server.pagination.PublicPagination',
 }
 
 # JWT配置
