@@ -18,6 +18,8 @@ export const useUserStore = defineStore("user", () => {
 
   const token = ref(getStorage("token") || "");
 
+  const userId = computed(() => userInfo.value.id || 0);
+
   // 重置表单
   const resetFormData = () => {
     userFormData.value = {
@@ -85,6 +87,7 @@ export const useUserStore = defineStore("user", () => {
     userInfo,
     resetUserInfo,
     firstName,
+    userId,
   };
 });
 

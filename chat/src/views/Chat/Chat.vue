@@ -1,9 +1,22 @@
 <script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { useChatStore } from "@/store/modules/chat";
 import Footer from "@/components/Footer/Footer.vue";
 import Message from "./Message.vue";
 import Room from "./Room.vue";
-
 import DleftIcon from "@/assets/icons/d_left.svg?component";
+import DrIcon from "@/assets/icons/d_r.svg?component";
+
+const chatStore = useChatStore();
+
+onMounted(() => {
+  chatStore.getRoomList();
+});
+
+let isOpen = ref(false);
+const openRoom = () => {
+  isOpen.value = !isOpen.value;
+};
 </script>
 
 <template>
@@ -21,10 +34,11 @@ import DleftIcon from "@/assets/icons/d_left.svg?component";
 
       <!-- 会话记录 -->
       <label
+        @click="openRoom"
         for="my-drawer"
-        class="drawer-button no-animation rounded-tl-lg rounded-bl-lg rounded-none px-1 btn btn-sm absolute right-0 z-[1] shadow-none"
+        class="drawer-button bg-base-100 no-animation rounded-tl-[2px] rounded-bl-[2px] rounded-none px-1 btn btn-sm absolute right-0 z-[1] shadow-none"
       >
-        <DleftIcon />
+        <component :is="isOpen ? DrIcon : DleftIcon"></component>
       </label>
 
       <div class="drawer w-0 drawer-end relative">

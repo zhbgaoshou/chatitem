@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import ContactIcon from "@/assets/icons/contact.svg?component";
 import MessageIcon from "@/assets/icons/message.svg?component";
-import MoreRoomIcon from "@/assets/icons/more_room.svg?component";
+import ChatIcon from "@/assets/icons/chat.svg?component";
+
 const sidebarList = [
   { icon: ContactIcon, text: "联系我" },
   { icon: MessageIcon, text: "反馈BUG" },
@@ -22,7 +23,7 @@ const sidebarList = [
 
     <li>
       <a>
-        <component :is="ContactIcon" class="w-[16px]" />
+        <component :is="ChatIcon" class="w-[16px]" />
         CHATGPT
       </a>
     </li>

@@ -2,6 +2,6 @@
 export const setTheme = (isDarkMode: boolean) => {
   document.documentElement.setAttribute(
     "data-theme",
-    isDarkMode ? "dark" : "light"
+    isDarkMode ? "black" : ""
   );
 };
